@@ -81,7 +81,7 @@ resource "azurerm_virtual_machine" "labstations" {
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2019-Datacenter"
+    sku       = "2016-Datacenter"
     version   = "latest"
   }
   storage_os_disk {
@@ -101,10 +101,10 @@ resource "azurerm_virtual_machine" "labstations" {
 }
 
 resource "azurerm_virtual_machine_extension" "extension" {
-    count              = "${var.vm_count}"
+  count                = "${var.vm_count}"
   name                 = "${var.labstation_prefix}-vm-${count.index+1}-extension"
-  location              = "${azurerm_resource_group.TFWS_Labstations.location}"
-  resource_group_name   = "${azurerm_resource_group.TFWS_Labstations.name}"
+  location             = "${azurerm_resource_group.TFWS_Labstations.location}"
+  resource_group_name  = "${azurerm_resource_group.TFWS_Labstations.name}"
   virtual_machine_name = "${element(azurerm_virtual_machine.labstations.*.id, count.index)}"
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
@@ -113,7 +113,7 @@ resource "azurerm_virtual_machine_extension" "extension" {
   settings = <<SETTINGS
     {
         "fileUris": [ "https://raw.githubusercontent.com/Kai-Herzig/AutomationLab/master/LabEnvironment/labprerequisites.ps1" ],
-        "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File labprerequisites.ps1"
+        "commandToExecute": "labprerequisites.ps1"
     }
 SETTINGS
 
