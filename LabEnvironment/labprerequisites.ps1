@@ -1,0 +1,1 @@
+new-item -Type Directory -path "C:\" -Name "temporaer"

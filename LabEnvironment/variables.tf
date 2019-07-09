@@ -31,9 +31,14 @@ variable "vn_subnetlabstations_cidr" {
 }
 variable "vm_count" {
   description = "Number of VMs"
-  default = "1"
+  default = "2"
 }
 variable "labstation_prefix" {
   description = "Prefix for Labstation naming"
   default = "labstation"
 }
+
+variable "rdpgwsource" {
+  description = "SourceIP for NSG"
+}
+
