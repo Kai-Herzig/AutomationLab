@@ -21,7 +21,11 @@ variable "rg_labstation" {
   default = "TFWS_Labstations"
 }
 
-variable "vn_cidr" {
+variable "vn_labstations_cidr" {
   description = "CIDR of Terraform Lab Virtual Network"
+  default = "10.0.0.0/26"
+}
+variable "vn_subnetlabstations_cidr" {
+  description = "CIDR of Subnet of Terraform Lab Virtual Network"
   default = "10.0.0.0/26"
 }
