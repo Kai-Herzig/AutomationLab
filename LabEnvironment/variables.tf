@@ -29,3 +29,11 @@ variable "vn_subnetlabstations_cidr" {
   description = "CIDR of Subnet of Terraform Lab Virtual Network"
   default = "10.0.0.0/26"
 }
+variable "vm_count" {
+  description = "Number of VMs"
+  default = "1"
+}
+variable "labstation_prefix" {
+  description = "Prefix for Labstation naming"
+  default = "labstation"
+}
