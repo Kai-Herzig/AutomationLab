@@ -10,7 +10,7 @@ Install-PackageProvider -Name "NuGet" -Confirm:$false -Force -Verbose
 
 
 ### Install Azure Powershell Module
-Install-Module -Name Az -AllowClobber -Confirm:$false -Force
+Install-Module -Name Az -AllowClobber -Confirm:$false -Force -Verbose
 
 ### Create TMP Folder
 New-Item -ItemType directory -Name "tmp" -Path "C:\"

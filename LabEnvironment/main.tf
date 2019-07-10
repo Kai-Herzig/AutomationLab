@@ -113,24 +113,24 @@ resource "azurerm_virtual_machine" "labstations" {
 }
 
 #### Timeouts prevent this provider from working correctly - further investigation needed
-#resource "azurerm_virtual_machine_extension" "extension" {
-#   count                = "${var.vm_count}"
-#   name                 = "${var.labstation_prefix}-vm-${count.index+1}-extension"
-#   location             = "${azurerm_resource_group.TFWS_Labstations.location}"
-#   resource_group_name  = "${azurerm_resource_group.TFWS_Labstations.name}"
-#   virtual_machine_name = "${element(azurerm_virtual_machine.labstations.*.name, count.index)}"
-#   publisher            = "Microsoft.Compute"
-#   type                 = "CustomScriptExtension"
-#   type_handler_version = "1.9"
+resource "azurerm_virtual_machine_extension" "extension" {
+  count                = "${var.vm_count}"
+  name                 = "${var.labstation_prefix}-vm-${count.index+1}-extension"
+  location             = "${azurerm_resource_group.TFWS_Labstations.location}"
+  resource_group_name  = "${azurerm_resource_group.TFWS_Labstations.name}"
+  virtual_machine_name = "${element(azurerm_virtual_machine.labstations.*.name, count.index)}"
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
+  type_handler_version = "1.9"
 
-#   settings = <<SETTINGS
-#     {
-#         "fileUris": [ "https://raw.githubusercontent.com/Kai-Herzig/AutomationLab/master/LabEnvironment/labprerequisites.ps1" ],
-#         "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File labprerequisites.ps1"
-#     }
-# SETTINGS
+  settings = <<SETTINGS
+    {
+        "fileUris": [ "https://raw.githubusercontent.com/Kai-Herzig/AutomationLab/master/LabEnvironment/labprerequisites.ps1" ],
+        "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File labprerequisites.ps1"
+    }
+SETTINGS
 
-#   tags = {
-#     environment = "Production"
-#   }
-# }
+  tags = {
+    environment = "Production"
+  }
+}
