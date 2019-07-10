@@ -45,7 +45,18 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "3389"
-    source_address_prefix      = "${var.rdpgwsource}"
+    source_address_prefix      = "${var.rdpgwsource1}"
+    destination_address_prefix = "VirtualNetwork"
+  }
+    security_rule {
+    name                       = "MySourceIP"
+    priority                   = 101
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "3389"
+    source_address_prefix      = "${var.rdpgwsource2}"
     destination_address_prefix = "VirtualNetwork"
   }
 }
@@ -55,7 +66,7 @@ resource "azurerm_subnet_network_security_group_association" "nsgtosubnet" {
 }
 
 resource "azurerm_public_ip" "pip" {
-  count                 = "${var.vm_count}"
+  count               = "${var.vm_count}"
   name                = "${var.labstation_prefix}-pip-${count.index+1}"
   location            = "${azurerm_resource_group.TFWS_Labstations.location}"
   resource_group_name = "${azurerm_resource_group.TFWS_Labstations.name}"
@@ -97,28 +108,29 @@ resource "azurerm_virtual_machine" "labstations" {
   }
   os_profile_windows_config{
     timezone = "W. Europe Standard Time"
+    provision_vm_agent = "true"
   }
 }
 
-resource "azurerm_virtual_machine_extension" "extension" {
-  count                = "${var.vm_count}"
-  name                 = "${var.labstation_prefix}-vm-${count.index+1}-extension"
-  location             = "${azurerm_resource_group.TFWS_Labstations.location}"
-  resource_group_name  = "${azurerm_resource_group.TFWS_Labstations.name}"
-  virtual_machine_name = "${element(azurerm_virtual_machine.labstations.*.id, count.index)}"
-  publisher            = "Microsoft.Compute"
-  type                 = "CustomScriptExtension"
-  type_handler_version = "1.9.3"
+#### Timeouts prevent this provider from working correctly - further investigation needed
+#resource "azurerm_virtual_machine_extension" "extension" {
+#   count                = "${var.vm_count}"
+#   name                 = "${var.labstation_prefix}-vm-${count.index+1}-extension"
+#   location             = "${azurerm_resource_group.TFWS_Labstations.location}"
+#   resource_group_name  = "${azurerm_resource_group.TFWS_Labstations.name}"
+#   virtual_machine_name = "${element(azurerm_virtual_machine.labstations.*.name, count.index)}"
+#   publisher            = "Microsoft.Compute"
+#   type                 = "CustomScriptExtension"
+#   type_handler_version = "1.9"
 
-  settings = <<SETTINGS
-    {
-        "fileUris": [ "https://raw.githubusercontent.com/Kai-Herzig/AutomationLab/master/LabEnvironment/labprerequisites.ps1" ],
-        "commandToExecute": "labprerequisites.ps1"
-    }
-SETTINGS
+#   settings = <<SETTINGS
+#     {
+#         "fileUris": [ "https://raw.githubusercontent.com/Kai-Herzig/AutomationLab/master/LabEnvironment/labprerequisites.ps1" ],
+#         "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File labprerequisites.ps1"
+#     }
+# SETTINGS
 
-  tags = {
-    environment = "Production"
-  }
-}
-
+#   tags = {
+#     environment = "Production"
+#   }
+# }

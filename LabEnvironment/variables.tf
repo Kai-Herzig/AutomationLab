@@ -38,7 +38,9 @@ variable "labstation_prefix" {
   default = "labstation"
 }
 
-variable "rdpgwsource" {
+variable "rdpgwsource1" {
   description = "SourceIP for NSG"
 }
-
+variable "rdpgwsource2" {
+  description = "SourceIP for NSG"
+}
