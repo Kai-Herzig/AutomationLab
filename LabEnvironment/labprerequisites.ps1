@@ -34,14 +34,14 @@ $url = "https://github-production-release-asset-2e65be.s3.amazonaws.com/23216272
 $output = "C:\tmp\Git-2.22.0-64-bit.exe"
 $wc = New-Object System.Net.WebClient
 $wc.DownloadFile($url, $output)
-Start-Process -FilePath 'C:\tmp\Git-2.22.0-64-bit.exe' -ArgumentList "/silent /install"
+Start-Process -FilePath 'C:\tmp\Git-2.22.0-64-bit.exe' -ArgumentList "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /NOCANCEL /SP- /LOG"
 
 ### Download and Install Visual Studio Code
 $url = "https://az764295.vo.msecnd.net/stable/2213894ea0415ee8c85c5eea0d0ff81ecc191529/VSCodeUserSetup-x64-1.36.1.exe"
 $output = "C:\tmp\VSCodeUserSetup-x64-1.36.1.exe"
 $wc = New-Object System.Net.WebClient
 $wc.DownloadFile($url, $output)
-Start-Process -FilePath 'C:\tmp\VSCodeUserSetup-x64-1.36.1.exe' -ArgumentList "/silent /install"
+Start-Process -FilePath 'C:\tmp\VSCodeUserSetup-x64-1.36.1.exe' -ArgumentList "/VERYSILENT /MERGETASKS=!runcode"
 
 ### Download, Extract and Install (Environment Variable) Terraform
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
