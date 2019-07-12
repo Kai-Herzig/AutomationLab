@@ -35,7 +35,7 @@ variable "vm_count" {
 }
 variable "labstation_prefix" {
   description = "Prefix for Labstation naming"
-  default = "labstation"
+  default = "labrig"
 }
 
 variable "rdpgwsource1" {
