@@ -31,7 +31,7 @@ variable "vn_subnetlabstations_cidr" {
 }
 variable "vm_count" {
   description = "Number of VMs"
-  default = "2"
+  default = "10"
 }
 variable "labstation_prefix" {
   description = "Prefix for Labstation naming"
