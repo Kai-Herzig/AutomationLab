@@ -3,7 +3,7 @@ resource "azurerm_resource_group" "main" {
   name     = "tfws-${var.participant}-${var.rg_name}"
   location = "${var.location}"
 }
-fgf
+
 resource "azurerm_virtual_network" "main" {
   name                = "${var.rg_name}"
   address_space       = ["${var.vn_cidr}"]
